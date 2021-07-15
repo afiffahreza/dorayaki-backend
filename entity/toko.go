@@ -1,7 +1,7 @@
-package models
+package entity
 
-type toko struct {
-	ID        uint   `json:"id" gorm:"primary_key"`
+type Toko struct {
+	ID        uint64 `json:"id" gorm:"primary_key:auto_increment"`
 	Nama      string `json:"nama"`
 	Jalan     string `json:"alamat"`
 	Kecamatan string `json:"kecamatan"`
