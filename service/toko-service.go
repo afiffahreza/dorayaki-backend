@@ -14,6 +14,8 @@ type TokoService interface {
 	Update(t dto.TokoUpdateDTO) entity.Toko
 	Delete(t entity.Toko)
 	All() []entity.Toko
+	FindTokoKecamatan(kecamatan string) []entity.Toko
+	FindTokoProvinsi(provinsi string) []entity.Toko
 }
 
 type tokoService struct {
@@ -52,4 +54,12 @@ func (service *tokoService) Delete(t entity.Toko) {
 
 func (service *tokoService) All() []entity.Toko {
 	return service.tokoRepository.AllToko()
+}
+
+func (service *tokoService) FindTokoKecamatan(kecamatan string) []entity.Toko {
+	return service.tokoRepository.FindTokoKecamatan(kecamatan)
+}
+
+func (service *tokoService) FindTokoProvinsi(provinsi string) []entity.Toko {
+	return service.tokoRepository.FindTokoProvinsi(provinsi)
 }

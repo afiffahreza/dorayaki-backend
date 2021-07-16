@@ -10,8 +10,8 @@ type TokoRepository interface {
 	UpdateToko(t entity.Toko) entity.Toko
 	DeleteToko(t entity.Toko)
 	AllToko() []entity.Toko
-	//FindTokoProvinsi(provinsi string) []entity.Toko
-	//FindTokoKecamatan(kecamatan string) []entity.Toko
+	FindTokoProvinsi(provinsi string) []entity.Toko
+	FindTokoKecamatan(kecamatan string) []entity.Toko
 }
 
 type tokoConnection struct {
@@ -42,4 +42,16 @@ func (db *tokoConnection) AllToko() []entity.Toko {
 	var tokoAll []entity.Toko
 	db.connection.Find(&tokoAll)
 	return tokoAll
+}
+
+func (db *tokoConnection) FindTokoProvinsi(provinsi string) []entity.Toko {
+	var tokoProv []entity.Toko
+	db.connection.Where("provinsi = ?", provinsi).Find(&tokoProv)
+	return tokoProv
+}
+
+func (db *tokoConnection) FindTokoKecamatan(kecamatan string) []entity.Toko {
+	var tokoKec []entity.Toko
+	db.connection.Where("kecamatan = ?", kecamatan).Find(&tokoKec)
+	return tokoKec
 }

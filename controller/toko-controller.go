@@ -16,6 +16,8 @@ type TokoController interface {
 	Update(ctx *gin.Context)
 	Delete(ctx *gin.Context)
 	All(ctx *gin.Context)
+	FindTokoKecamatan(ctx *gin.Context)
+	FindTokoProvinsi(ctx *gin.Context)
 }
 
 type tokoController struct {
@@ -72,4 +74,26 @@ func (c *tokoController) All(ctx *gin.Context) {
 	var tokoAll []entity.Toko = c.tokoService.All()
 	res := helper.BuildResponse(true, "OK", tokoAll)
 	ctx.JSON(http.StatusOK, res)
+}
+
+func (c *tokoController) FindTokoProvinsi(ctx *gin.Context) {
+	var tokoProv []entity.Toko = c.tokoService.FindTokoProvinsi(ctx.Param("prov"))
+	if len(tokoProv) == 0 {
+		res := helper.BuildErrorResponse("Data not found", "No data with given id", helper.EmptyObj{})
+		ctx.JSON(http.StatusNotFound, res)
+	} else {
+		res := helper.BuildResponse(true, "OK", tokoProv)
+		ctx.JSON(http.StatusOK, res)
+	}
+}
+
+func (c *tokoController) FindTokoKecamatan(ctx *gin.Context) {
+	var tokoKec []entity.Toko = c.tokoService.FindTokoProvinsi(ctx.Param("kec"))
+	if len(tokoKec) == 0 {
+		res := helper.BuildErrorResponse("Data not found", "No data with given id", helper.EmptyObj{})
+		ctx.JSON(http.StatusNotFound, res)
+	} else {
+		res := helper.BuildResponse(true, "OK", tokoKec)
+		ctx.JSON(http.StatusOK, res)
+	}
 }
