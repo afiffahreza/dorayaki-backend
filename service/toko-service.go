@@ -14,6 +14,7 @@ type TokoService interface {
 	Update(t dto.TokoUpdateDTO) entity.Toko
 	Delete(t entity.Toko)
 	All() []entity.Toko
+	FindTokoQuery(provinsi string, kecamatan string) []entity.Toko
 	FindTokoKecamatan(kecamatan string) []entity.Toko
 	FindTokoProvinsi(provinsi string) []entity.Toko
 }
@@ -62,4 +63,8 @@ func (service *tokoService) FindTokoKecamatan(kecamatan string) []entity.Toko {
 
 func (service *tokoService) FindTokoProvinsi(provinsi string) []entity.Toko {
 	return service.tokoRepository.FindTokoProvinsi(provinsi)
+}
+
+func (service *tokoService) FindTokoQuery(provinsi string, kecamatan string) []entity.Toko {
+	return service.tokoRepository.FindTokoQuery(provinsi, kecamatan)
 }

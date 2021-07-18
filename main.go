@@ -34,6 +34,7 @@ func main() {
 		tokoRoutes.DELETE("/:id", tokoController.Delete)
 		tokoRoutes.GET("/kecamatan/:kec", tokoController.FindTokoKecamatan)
 		tokoRoutes.GET("/provinsi/:prov", tokoController.FindTokoProvinsi)
+		tokoRoutes.GET("/query", tokoController.FindTokoQuery)
 	}
 
 	r.Run()
