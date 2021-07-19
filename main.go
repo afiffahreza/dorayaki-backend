@@ -10,10 +10,13 @@ import (
 )
 
 var (
-	db             *gorm.DB                  = connection.SetupDatabaseConnection()
-	tokoRepository repository.TokoRepository = repository.NewTokoRepository(db)
-	tokoService    service.TokoService       = service.NewTokoService(tokoRepository)
-	tokoController controller.TokoController = controller.NewTokoController(tokoService)
+	db                 *gorm.DB                      = connection.SetupDatabaseConnection()
+	tokoRepository     repository.TokoRepository     = repository.NewTokoRepository(db)
+	tokoService        service.TokoService           = service.NewTokoService(tokoRepository)
+	tokoController     controller.TokoController     = controller.NewTokoController(tokoService)
+	dorayakiRepository repository.DorayakiRepository = repository.NewDorayakiRepository(db)
+	dorayakiService    service.DorayakiService       = service.NewDorayakiService(dorayakiRepository)
+	dorayakiController controller.DorayakiController = controller.NewDorayakiController(dorayakiService)
 )
 
 func main() {
@@ -35,6 +38,14 @@ func main() {
 		tokoRoutes.GET("/kecamatan/:kec", tokoController.FindTokoKecamatan)
 		tokoRoutes.GET("/provinsi/:prov", tokoController.FindTokoProvinsi)
 		tokoRoutes.GET("/query", tokoController.FindTokoQuery)
+	}
+
+	dorayakiRoutes := r.Group("api/dorayaki")
+	{
+		dorayakiRoutes.GET("/", dorayakiController.All)
+		dorayakiRoutes.POST("/", dorayakiController.Insert)
+		dorayakiRoutes.PUT("/:id", dorayakiController.Update)
+		dorayakiRoutes.DELETE("/:id", dorayakiController.Delete)
 	}
 
 	r.Run()
