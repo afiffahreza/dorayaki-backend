@@ -17,6 +17,9 @@ var (
 	dorayakiRepository repository.DorayakiRepository = repository.NewDorayakiRepository(db)
 	dorayakiService    service.DorayakiService       = service.NewDorayakiService(dorayakiRepository)
 	dorayakiController controller.DorayakiController = controller.NewDorayakiController(dorayakiService)
+	stockRepository    repository.StockRepository    = repository.NewStockRepository(db)
+	stockService       service.StockService          = service.NewStockService(stockRepository)
+	stockController    controller.StockController    = controller.NewStockController(stockService)
 )
 
 func main() {
@@ -46,6 +49,14 @@ func main() {
 		dorayakiRoutes.POST("/", dorayakiController.Insert)
 		dorayakiRoutes.PUT("/:id", dorayakiController.Update)
 		dorayakiRoutes.DELETE("/:id", dorayakiController.Delete)
+	}
+
+	stockRoutes := r.Group("api/stock")
+	{
+		stockRoutes.GET("/", stockController.All)
+		stockRoutes.POST("/", stockController.Insert)
+		stockRoutes.PUT("/:id", stockController.Update)
+		stockRoutes.DELETE("/:id", stockController.Delete)
 	}
 
 	r.Run()
