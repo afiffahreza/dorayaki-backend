@@ -15,8 +15,7 @@ type TokoService interface {
 	Delete(t entity.Toko)
 	All() []entity.Toko
 	FindTokoQuery(provinsi string, kecamatan string) []entity.Toko
-	FindTokoKecamatan(kecamatan string) []entity.Toko
-	FindTokoProvinsi(provinsi string) []entity.Toko
+	FindByID(id uint64) entity.Toko
 }
 
 type tokoService struct {
@@ -57,12 +56,8 @@ func (service *tokoService) All() []entity.Toko {
 	return service.tokoRepository.AllToko()
 }
 
-func (service *tokoService) FindTokoKecamatan(kecamatan string) []entity.Toko {
-	return service.tokoRepository.FindTokoKecamatan(kecamatan)
-}
-
-func (service *tokoService) FindTokoProvinsi(provinsi string) []entity.Toko {
-	return service.tokoRepository.FindTokoProvinsi(provinsi)
+func (service *tokoService) FindByID(id uint64) entity.Toko {
+	return service.tokoRepository.FindByID(id)
 }
 
 func (service *tokoService) FindTokoQuery(provinsi string, kecamatan string) []entity.Toko {

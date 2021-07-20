@@ -35,8 +35,7 @@ func main() {
 		tokoRoutes.POST("/", tokoController.Insert)
 		tokoRoutes.PUT("/:id", tokoController.Update)
 		tokoRoutes.DELETE("/:id", tokoController.Delete)
-		tokoRoutes.GET("/kecamatan/:kec", tokoController.FindTokoKecamatan)
-		tokoRoutes.GET("/provinsi/:prov", tokoController.FindTokoProvinsi)
+		tokoRoutes.GET("/:id", tokoController.FindByID)
 		tokoRoutes.GET("/query", tokoController.FindTokoQuery)
 	}
 

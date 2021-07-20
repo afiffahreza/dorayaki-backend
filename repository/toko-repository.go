@@ -11,8 +11,7 @@ type TokoRepository interface {
 	DeleteToko(t entity.Toko)
 	AllToko() []entity.Toko
 	FindTokoQuery(provinsi string, kecamatan string) []entity.Toko
-	FindTokoProvinsi(provinsi string) []entity.Toko
-	FindTokoKecamatan(kecamatan string) []entity.Toko
+	FindByID(id uint64) entity.Toko
 }
 
 type tokoConnection struct {
@@ -45,16 +44,10 @@ func (db *tokoConnection) AllToko() []entity.Toko {
 	return tokoAll
 }
 
-func (db *tokoConnection) FindTokoProvinsi(provinsi string) []entity.Toko {
-	var tokoProv []entity.Toko
-	db.connection.Where("provinsi = ?", provinsi).Find(&tokoProv)
-	return tokoProv
-}
-
-func (db *tokoConnection) FindTokoKecamatan(kecamatan string) []entity.Toko {
-	var tokoKec []entity.Toko
-	db.connection.Where("kecamatan = ?", kecamatan).Find(&tokoKec)
-	return tokoKec
+func (db *tokoConnection) FindByID(id uint64) entity.Toko {
+	var toko entity.Toko
+	db.connection.Find(&toko, id)
+	return toko
 }
 
 func (db *tokoConnection) FindTokoQuery(provinsi string, kecamatan string) []entity.Toko {
