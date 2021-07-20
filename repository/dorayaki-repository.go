@@ -10,6 +10,7 @@ type DorayakiRepository interface {
 	UpdateDorayaki(d entity.Dorayaki) entity.Dorayaki
 	DeleteDorayaki(d entity.Dorayaki)
 	AllDorayaki() []entity.Dorayaki
+	FindByID(id uint64) entity.Dorayaki
 }
 
 type dorayakiConnection struct {
@@ -40,4 +41,10 @@ func (db *dorayakiConnection) AllDorayaki() []entity.Dorayaki {
 	var dorayakiAll []entity.Dorayaki
 	db.connection.Find(&dorayakiAll)
 	return dorayakiAll
+}
+
+func (db *dorayakiConnection) FindByID(id uint64) entity.Dorayaki {
+	var dorayaki entity.Dorayaki
+	db.connection.Find(&dorayaki, id)
+	return dorayaki
 }

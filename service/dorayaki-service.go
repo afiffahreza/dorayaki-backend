@@ -14,6 +14,7 @@ type DorayakiService interface {
 	Update(d dto.DorayakiUpdateDTO) entity.Dorayaki
 	Delete(d entity.Dorayaki)
 	All() []entity.Dorayaki
+	FindByID(id uint64) entity.Dorayaki
 }
 
 type dorayakiService struct {
@@ -52,4 +53,8 @@ func (service *dorayakiService) Delete(d entity.Dorayaki) {
 
 func (service *dorayakiService) All() []entity.Dorayaki {
 	return service.dorayakiRepository.AllDorayaki()
+}
+
+func (service *dorayakiService) FindByID(id uint64) entity.Dorayaki {
+	return service.dorayakiRepository.FindByID(id)
 }

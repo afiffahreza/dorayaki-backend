@@ -16,6 +16,7 @@ type DorayakiController interface {
 	Update(ctx *gin.Context)
 	Delete(ctx *gin.Context)
 	All(ctx *gin.Context)
+	FindByID(ctx *gin.Context)
 }
 
 type dorayakiController struct {
@@ -72,4 +73,21 @@ func (c *dorayakiController) All(ctx *gin.Context) {
 	var dorayakiAll []entity.Dorayaki = c.dorayakiService.All()
 	res := helper.BuildResponse(true, "OK", dorayakiAll)
 	ctx.JSON(http.StatusOK, res)
+}
+
+func (c *dorayakiController) FindByID(ctx *gin.Context) {
+	id, err := strconv.ParseUint(ctx.Param("id"), 0, 0)
+	if err != nil {
+		res := helper.BuildErrorResponse("No param id was found", err.Error(), helper.EmptyObj{})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
+		return
+	}
+	var dorayaki entity.Dorayaki = c.dorayakiService.FindByID(id)
+	if (dorayaki == entity.Dorayaki{}) {
+		res := helper.BuildErrorResponse("Data not found", "No data with given id", helper.EmptyObj{})
+		ctx.JSON(http.StatusNotFound, res)
+	} else {
+		res := helper.BuildResponse(true, "OK", dorayaki)
+		ctx.JSON(http.StatusOK, res)
+	}
 }

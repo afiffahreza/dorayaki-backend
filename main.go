@@ -43,6 +43,7 @@ func main() {
 	dorayakiRoutes := r.Group("api/dorayaki")
 	{
 		dorayakiRoutes.GET("/", dorayakiController.All)
+		dorayakiRoutes.GET("/:id", dorayakiController.FindByID)
 		dorayakiRoutes.POST("/", dorayakiController.Insert)
 		dorayakiRoutes.PUT("/:id", dorayakiController.Update)
 		dorayakiRoutes.DELETE("/:id", dorayakiController.Delete)
