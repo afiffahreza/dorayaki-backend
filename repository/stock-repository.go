@@ -10,6 +10,7 @@ type StockRepository interface {
 	UpdateStock(s entity.Stock) entity.Stock
 	DeleteStock(s entity.Stock)
 	AllStock() []entity.Stock
+	FindStockByStoreID(id uint64) []entity.Stock
 }
 
 type stockConnection struct {
@@ -39,5 +40,11 @@ func (db *stockConnection) DeleteStock(s entity.Stock) {
 func (db *stockConnection) AllStock() []entity.Stock {
 	var stocks []entity.Stock
 	db.connection.Find(&stocks)
+	return stocks
+}
+
+func (db *stockConnection) FindStockByStoreID(id uint64) []entity.Stock {
+	var stocks []entity.Stock
+	db.connection.Where("toko_id = ?", id).Find(&stocks)
 	return stocks
 }

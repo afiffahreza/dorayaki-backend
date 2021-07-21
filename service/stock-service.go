@@ -14,6 +14,7 @@ type StockService interface {
 	Update(s dto.StockUpdateDTO) entity.Stock
 	Delete(s entity.Stock)
 	All() []entity.Stock
+	FindStockByStoreID(id uint64) []entity.Stock
 }
 
 type stockService struct {
@@ -52,4 +53,8 @@ func (service *stockService) Delete(s entity.Stock) {
 
 func (service *stockService) All() []entity.Stock {
 	return service.stockRepository.AllStock()
+}
+
+func (service *stockService) FindStockByStoreID(id uint64) []entity.Stock {
+	return service.stockRepository.FindStockByStoreID(id)
 }

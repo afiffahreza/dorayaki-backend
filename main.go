@@ -32,7 +32,7 @@ func main() {
 		})
 	*/
 
-	tokoRoutes := r.Group("api/toko")
+	tokoRoutes := r.Group("api/v1/toko")
 	{
 		tokoRoutes.GET("/", tokoController.All)
 		tokoRoutes.POST("/", tokoController.Insert)
@@ -42,7 +42,7 @@ func main() {
 		tokoRoutes.GET("/query", tokoController.FindTokoQuery)
 	}
 
-	dorayakiRoutes := r.Group("api/dorayaki")
+	dorayakiRoutes := r.Group("api/v1/dorayaki")
 	{
 		dorayakiRoutes.GET("/", dorayakiController.All)
 		dorayakiRoutes.GET("/:id", dorayakiController.FindByID)
@@ -51,9 +51,10 @@ func main() {
 		dorayakiRoutes.DELETE("/:id", dorayakiController.Delete)
 	}
 
-	stockRoutes := r.Group("api/stock")
+	stockRoutes := r.Group("api/v1/stock")
 	{
 		stockRoutes.GET("/", stockController.All)
+		stockRoutes.GET("/toko/:id", stockController.FindStockByStoreID)
 		stockRoutes.POST("/", stockController.Insert)
 		stockRoutes.PUT("/:id", stockController.Update)
 		stockRoutes.DELETE("/:id", stockController.Delete)

@@ -16,6 +16,7 @@ type StockController interface {
 	Update(ctx *gin.Context)
 	Delete(ctx *gin.Context)
 	All(ctx *gin.Context)
+	FindStockByStoreID(ctx *gin.Context)
 }
 
 type stockController struct {
@@ -72,4 +73,17 @@ func (c *stockController) All(ctx *gin.Context) {
 	var stocks []entity.Stock = c.stockService.All()
 	res := helper.BuildResponse(true, "OK", stocks)
 	ctx.JSON(http.StatusOK, res)
+}
+
+func (c *stockController) FindStockByStoreID(ctx *gin.Context) {
+	var stocks []entity.Stock
+	id, err := strconv.ParseUint(ctx.Param("id"), 0, 0)
+	if err != nil {
+		response := helper.BuildErrorResponse("Failed to get id", "No param id were found", helper.EmptyObj{})
+		ctx.JSON(http.StatusBadRequest, response)
+	} else {
+		stocks = c.stockService.FindStockByStoreID(id)
+		res := helper.BuildResponse(true, "OK", stocks)
+		ctx.JSON(http.StatusOK, res)
+	}
 }
