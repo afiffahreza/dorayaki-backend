@@ -18,7 +18,7 @@ func SetupDatabaseConnection() *gorm.DB {
 	}
 
 	dbUser := os.Getenv("DB_USER")
-	dbPass := os.Getenv("DB_PASS")
+	dbPass := os.Getenv("DB_PASSWORD")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbName := os.Getenv("DB_NAME")
@@ -30,6 +30,13 @@ func SetupDatabaseConnection() *gorm.DB {
 	}
 
 	db.AutoMigrate(&entity.Toko{}, &entity.Dorayaki{}, &entity.Stock{})
+
+	seed := os.Getenv("SEEDER")
+
+	if seed == "seed" {
+		Load(db)
+	}
+
 	return db
 }
 
