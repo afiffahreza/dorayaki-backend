@@ -17,7 +17,7 @@ var tokos = []entity.Toko{
 	},
 	{
 		ID:        2,
-		Nama:      "Dorayaki Bros",
+		Nama:      "Mc Dorayaki's",
 		Jalan:     "Jl. TB Simatupang No. 3",
 		Kecamatan: "Jagakarsa",
 		Provinsi:  "DKI Jakarta",
