@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/afiffahreza/dorayaki-backend/connection"
 	"github.com/afiffahreza/dorayaki-backend/controller"
+	"github.com/afiffahreza/dorayaki-backend/middleware"
 	"github.com/afiffahreza/dorayaki-backend/repository"
 	"github.com/afiffahreza/dorayaki-backend/service"
 	"github.com/gin-gonic/gin"
@@ -25,12 +26,7 @@ var (
 func main() {
 	defer connection.CloseDatabaseConnection(db)
 	r := gin.Default()
-
-	/*
-		r.GET("/", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{"data": "Hello, World!"})
-		})
-	*/
+	r.Use(middleware.CORSMiddleware())
 
 	tokoRoutes := r.Group("api/v1/toko")
 	{
