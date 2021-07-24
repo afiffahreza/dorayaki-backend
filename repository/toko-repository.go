@@ -10,7 +10,7 @@ type TokoRepository interface {
 	UpdateToko(t entity.Toko) entity.Toko
 	DeleteToko(t entity.Toko)
 	AllToko() []entity.Toko
-	FindTokoQuery(provinsi string, kecamatan string) []entity.Toko
+	FindTokoQuery(query string) []entity.Toko
 	FindByID(id uint64) entity.Toko
 }
 
@@ -50,14 +50,9 @@ func (db *tokoConnection) FindByID(id uint64) entity.Toko {
 	return toko
 }
 
-func (db *tokoConnection) FindTokoQuery(provinsi string, kecamatan string) []entity.Toko {
+func (db *tokoConnection) FindTokoQuery(query string) []entity.Toko {
 	var tokoQuery []entity.Toko
-	if provinsi == "__EMPTY__" {
-		db.connection.Where("kecamatan = ?", kecamatan).Find(&tokoQuery)
-	} else if kecamatan == "__EMPTY__" {
-		db.connection.Where("provinsi = ?", provinsi).Find(&tokoQuery)
-	} else {
-		db.connection.Where("kecamatan = ?", kecamatan).Where("provinsi = ?", provinsi).Find(&tokoQuery)
-	}
+	finalQuery := "%" + query + "%"
+	db.connection.Where("nama LIKE ? OR kecamatan LIKE ? OR provinsi LIKE ?", finalQuery, finalQuery, finalQuery).Find(&tokoQuery)
 	return tokoQuery
 }

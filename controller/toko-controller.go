@@ -94,9 +94,8 @@ func (c *tokoController) FindByID(ctx *gin.Context) {
 }
 
 func (c *tokoController) FindTokoQuery(ctx *gin.Context) {
-	var prov string = ctx.DefaultQuery("prov", "__EMPTY__")
-	var kec string = ctx.DefaultQuery("kec", "__EMPTY__")
-	var tokoQuery []entity.Toko = c.tokoService.FindTokoQuery(prov, kec)
+	var query string = ctx.DefaultQuery("query", "__EMPTY__")
+	var tokoQuery []entity.Toko = c.tokoService.FindTokoQuery(query)
 	if len(tokoQuery) == 0 {
 		res := helper.BuildErrorResponse("Data not found", "No data with given id", helper.EmptyObj{})
 		ctx.JSON(http.StatusNotFound, res)
