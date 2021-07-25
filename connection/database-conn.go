@@ -31,10 +31,17 @@ func SetupDatabaseConnection() *gorm.DB {
 
 	db.AutoMigrate(&entity.Toko{}, &entity.Dorayaki{}, &entity.Stock{})
 
-	seed := os.Getenv("SEEDER")
+	var tokos []entity.Toko
+	db.Find(&tokos)
 
-	if seed == "seed" {
-		Load(db)
+	var dorayakis []entity.Dorayaki
+	db.Find(&dorayakis)
+
+	var stocks []entity.Stock
+	db.Find(&stocks)
+
+	if len(tokos) == 0 && len(dorayakis) == 0 && len(stocks) == 0 {
+		LoadSeed(db)
 	}
 
 	return db
