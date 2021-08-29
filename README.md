@@ -2,7 +2,7 @@
 
 Welcome to my dorayaki stock management backend app repository for my programming lab assistant test submission!
 
-### Deployment Link: [http://165.22.58.239:8080/](http://165.22.58.239:8080/)
+### Deployment Link: ~~(http://165.22.58.239:8080/)~~ (Update 8/29/21 turned off)
 
 ## How to Run
 
